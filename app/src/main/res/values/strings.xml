@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">EasyVSD_Shell</string>
+    <string name="stylus_width_es">EXTRA SMALL</string>
+    <string name="stylus_width_s">SMALL</string>
+    <string name="stylus_width_m">MEDIUM</string>
+    <string name="stylus_width_l">LARGE</string>
+    <string name="stylus_width_el">EXTRA LARGE</string>
+    <string name="stylus_erase">ERASE</string>
+    <string name="clear_drawings">CLEAR</string>
+    <string name="activity_image">Current Activity Image</string>
+    <string name="activity_video">Current Activity Video</string>
+</resources>
