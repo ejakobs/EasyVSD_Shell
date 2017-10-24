@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         left + "," + top + "," + right + "," + bottom + "] old=[" + oldLeft + "," + oldTop + "," + oldRight +
                         "," + oldBottom + "]");
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                if((prefs.getBoolean("allow_hotspot_text", false)) && (bottom > oldBottom))
+                if(bottom > oldBottom)
                     setUpAdminPanel(false, false, false);
             }});
 
@@ -1166,7 +1166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DisplayMetrics metrics = MainActivity.this.getResources().getDisplayMetrics();
         boolean portrait = (MainActivity.this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) ||
                 (metrics.heightPixels > metrics.widthPixels);
-        int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "250"));
+        int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "220"));
         buttonSize = (int)Math.round(buttonSize * Math.max(metrics.widthPixels, metrics.heightPixels) / 2560f);
         if(navLayout == null){return;}
         ViewGroup.LayoutParams nP = navLayout.getLayoutParams();
