@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ScrollView vActivities, vPages;
     LinearLayout activityLayout, pageLayout;
     NewDrawingView dvDrawing;
-    LinearLayout adminPanel;
+    GridLayout adminPanel;
     GridLayout navLayout;
 
     BackgroundHighlightButton btnCreateActivity, btnCreatePage, btnEditHotspot, btnCancelHotspot, btnDrawingMode,
@@ -1045,7 +1045,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "250"));
         buttonSize = (int)Math.round(buttonSize * Math.max(metrics.widthPixels, metrics.heightPixels) / 2560f);
         int margin = (int)Math.round(buttonSize / 25f);
-        adminPanel = (LinearLayout)findViewById(R.id.adminPanel);
+        adminPanel = (GridLayout)findViewById(R.id.adminPanel);
         RelativeLayout.LayoutParams pnlLayoutParamsAdmin = (RelativeLayout.LayoutParams) adminPanel.getLayoutParams();
         RelativeLayout.LayoutParams pnlLayoutParamsDestination = (RelativeLayout.LayoutParams)destinationView.getLayoutParams();
         RelativeLayout.LayoutParams pnlLayoutParamsVideoSurface = (RelativeLayout.LayoutParams)videoSurface.getLayoutParams();
@@ -1162,11 +1162,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean videoPaused;
     private void setUpAdminPanel(boolean hotspotCreated, boolean hotspotSelected, boolean recording){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        boolean adminInNav = true; //prefs.getBoolean("admin_in_nav", true);
+        boolean adminInNav = false; //prefs.getBoolean("admin_in_nav", true);
         DisplayMetrics metrics = MainActivity.this.getResources().getDisplayMetrics();
         boolean portrait = (MainActivity.this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) ||
                 (metrics.heightPixels > metrics.widthPixels);
-        int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "250"));
+        int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "200"));
         buttonSize = (int)Math.round(buttonSize * Math.max(metrics.widthPixels, metrics.heightPixels) / 2560f);
         if(navLayout == null){return;}
         ViewGroup.LayoutParams nP = navLayout.getLayoutParams();
