@@ -182,10 +182,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadUser();
 
         vPages = (ScrollView)findViewById(R.id.ActivityPages_vertical);
-        if(vPages != null){ vPages.removeAllViews(); }
+        //if(vPages != null){ vPages.removeAllViews(); }
 
         hPages = (HorizontalScrollView)findViewById(R.id.ActivityPages_horizontal);
-        if(hPages != null){ hPages.removeAllViews(); }
+        //if(hPages != null){ hPages.removeAllViews(); }
 
         destinationView = (ImageView)findViewById(R.id.ActivityImage);
         videoSurface = (SurfaceView)findViewById(R.id.ActivityVideo);
@@ -439,9 +439,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadUser();
 
         vPages = (ScrollView)findViewById(R.id.ActivityPages_vertical);
-        if(vPages != null){vPages.removeAllViews();}
+        //if(vPages != null){vPages.removeAllViews();}
         hPages = (HorizontalScrollView)findViewById(R.id.ActivityPages_horizontal);
-        if(hPages != null){ hPages.removeAllViews(); }
+        //if(hPages != null){ hPages.removeAllViews(); }
 
         setUpAdminPanel(false, false, false);
     }
@@ -1863,7 +1863,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Log.i("PlayTalk", "setDrawingOptions: State=[" + String.valueOf(State.getValue(currentState)) + "]");
         invalidateOptionsMenu();
         if(drawing || erasing){
-            if(hActivities != null)
+            /*if(hActivities != null)
                 hActivities.setVisibility(View.GONE);
             if(vActivities != null){
                 vActivities.setVisibility(View.GONE);
@@ -1874,7 +1874,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(vPages != null){
                 vPages.setVisibility(View.GONE);
                 Log.d("vPages", "1045 vPages Gone");
-            }
+            }*/
             GridLayout drawingOptions = (GridLayout)findViewById(R.id.DrawingOptions);
             if(drawingOptions != null)
                 drawingOptions.setVisibility(View.VISIBLE);
@@ -1888,7 +1888,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             GridLayout drawingOptions = (GridLayout)findViewById(R.id.DrawingOptions);
             if(drawingOptions != null)
                 drawingOptions.setVisibility(View.GONE);
-            if(hActivities != null)
+            /*if(hActivities != null)
                 hActivities.setVisibility(View.VISIBLE);
             if(vActivities != null){
                 vActivities.setVisibility(View.VISIBLE);
@@ -1899,7 +1899,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(vPages != null){
                 vPages.setVisibility(View.VISIBLE);
                 Log.d("vPages", "1070 vPages Visible");
-            }
+            }*/
         }
         //Log.i("PlayTalk", "Main.setDrawingOptions: exit, State=[" + String.valueOf(State.getValue(currentState)) + "]" +
         //	", dvDrawing.Enabled=" + Boolean.toString(dvDrawing.isEnabled() )+
