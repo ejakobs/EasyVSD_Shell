@@ -529,6 +529,10 @@ public class BackgroundHighlightButton extends AppCompatButton {
 			options.inInputShareable = true;
 			options.inJustDecodeBounds = false;
 			ret = BitmapFactory.decodeResource(res, resId, options);
+
+			if(reqWidth > 0 && reqHeight > 0)
+				ret = Bitmap.createScaledBitmap(ret, reqWidth, reqHeight, true);
+			
 		}catch(Exception e){
 			ret = null;
 		}finally{
