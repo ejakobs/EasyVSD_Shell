@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     GridLayout navLayout;
 
     BackgroundHighlightButton btnCreateActivity, btnCreatePage, btnEditHotspot, btnCancelHotspot, btnDrawingMode,
-            btnNavMode, btnStartRecording, btnEndRecording, btnDeleteHotspot, btnUndo, btnRedo, btnVideoRestart,
+            btnNavMode, btnStartRecording, btnEndRecording, btnDeleteHotspot, /*btnUndo, btnRedo,*/ btnVideoRestart,
             btnVideoStepBack, btnVideoPlay, btnVideoStepForward, btnVideoPause;
 
     Drawing currentDrawing;
@@ -655,6 +655,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_deleteHotspot:
                 // delete currently selected hotspot
                 break;
+            /*
             case R.id.btn_undo:
                 dvDrawing.undo();
                 setUpAdminPanel(false, false, false);
@@ -663,6 +664,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dvDrawing.redo();
                 setUpAdminPanel(false, false, false);
                 break;
+            */
             case R.id.btn_video_restart:
                 // restart video
                 break;
@@ -1115,6 +1117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDeleteHotspot.setForegroundImageResource(this, R.drawable.delete_circle, true); // realImages ? R.drawable.trash_icon : R.drawable.delete_hotspot, true);
         btnDeleteHotspot.setOnClickListener(this);
         setUpAdminButton(btnDeleteHotspot, buttonSize, margin);
+        /*
         btnUndo = (BackgroundHighlightButton)findViewById(R.id.btn_undo);
         btnUndo.setForegroundImageResource(this, R.drawable.undo_circle, true);
         btnUndo.setOnClickListener(this);
@@ -1123,6 +1126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnRedo.setForegroundImageResource(this, R.drawable.redo_circle, true);
         btnRedo.setOnClickListener(this);
         setUpAdminButton(btnRedo, buttonSize, margin);
+        */
         btnVideoRestart = (BackgroundHighlightButton)findViewById(R.id.btn_video_restart);
         btnVideoRestart.setForegroundImageResource(this, R.drawable.restart_button, true);
         btnVideoRestart.setOnClickListener(this);
@@ -1185,8 +1189,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setUpAdminButton(btnEndRecording, buttonSize, margin);
         setUpAdminButton(btnDrawingMode, buttonSize, margin);
         setUpAdminButton(btnNavMode, buttonSize, margin);
-        setUpAdminButton(btnUndo, buttonSize, margin);
-        setUpAdminButton(btnRedo, buttonSize, margin);
+        //setUpAdminButton(btnUndo, buttonSize, margin);
+        //setUpAdminButton(btnRedo, buttonSize, margin);
         setUpAdminButton(btnVideoRestart, buttonSize, margin);
         setUpAdminButton(btnVideoStepBack, buttonSize, margin);
         setUpAdminButton(btnVideoPlay, buttonSize, margin);
@@ -1203,8 +1207,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             navLayout.removeView(btnEndRecording);
             navLayout.removeView(btnDrawingMode);
             navLayout.removeView(btnNavMode);
-            navLayout.removeView(btnUndo);
-            navLayout.removeView(btnRedo);
+            //navLayout.removeView(btnUndo);
+            //navLayout.removeView(btnRedo);
             navLayout.removeView(btnVideoRestart);
             navLayout.removeView(btnVideoStepBack);
             navLayout.removeView(btnVideoPlay);
@@ -1224,8 +1228,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 adminPanel.removeView(btnEndRecording);
                 adminPanel.removeView(btnDrawingMode);
                 adminPanel.removeView(btnNavMode);
-                adminPanel.removeView(btnUndo);
-                adminPanel.removeView(btnRedo);
+                //adminPanel.removeView(btnUndo);
+                //adminPanel.removeView(btnRedo);
                 adminPanel.removeView(btnVideoRestart);
                 adminPanel.removeView(btnVideoStepBack);
                 adminPanel.removeView(btnVideoPlay);
@@ -1468,6 +1472,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         params.height = buttonSize;
                     }
                     navLayout.addView(btnNavMode, params);
+                    /*
                     boolean undoRedoAllowed = prefs.getBoolean("undo_redo_enabled", false);
                     if(dvDrawing != null){
                         if(undoRedoAllowed && dvDrawing.canRedo() && dvDrawing.canUndo()){
@@ -1523,7 +1528,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }else{
                         newDimen -= (buttonSize + (2*margin));
-                    }
+                    }*/
                 }
             }
         }else if(adminInNav && currentPage >= 0 && isVideo &&
@@ -1538,8 +1543,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 adminPanel.removeView(btnEndRecording);
                 adminPanel.removeView(btnDrawingMode);
                 adminPanel.removeView(btnNavMode);
-                adminPanel.removeView(btnUndo);
-                adminPanel.removeView(btnRedo);
+                //adminPanel.removeView(btnUndo);
+                //adminPanel.removeView(btnRedo);
                 adminPanel.removeView(btnVideoRestart);
                 adminPanel.removeView(btnVideoStepBack);
                 adminPanel.removeView(btnVideoPlay);
@@ -1658,7 +1663,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 currentState == State.Navigate);
         Log.i("setUpAdminPanel", "showVideoButtons=[" + String.valueOf(showVideoButtons) +
                 "] enableVideoControlHotspots=[" + String.valueOf(!prefs.getBoolean("enableVideoControlHotspots", false)) + "]");
-        adminPanel.setVisibility((((currentMode == Mode.Create) || (currentMode == Mode.AdvancedCreate)) && !adminInNav) ? View.VISIBLE : View.GONE);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        adminPanel.setVisibility((((currentMode == Mode.Create) || (currentMode == Mode.AdvancedCreate)) && !adminInNav) ? View.VISIBLE : View.INVISIBLE);
         if(currentMode == Mode.iSnap){
             btnCreateActivity.setVisibility(View.GONE);
             btnCreatePage.setVisibility(View.VISIBLE);
@@ -1669,8 +1675,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             btnStartRecording.setVisibility(View.GONE);
             btnEndRecording.setVisibility(View.GONE);
             btnDeleteHotspot.setVisibility(View.GONE);
-            btnUndo.setVisibility(View.GONE);
-            btnRedo.setVisibility(View.GONE);
+            //btnUndo.setVisibility(View.GONE);
+            //btnRedo.setVisibility(View.GONE);
             btnVideoRestart.setVisibility(View.GONE);
             btnVideoStepBack.setVisibility(View.GONE);
             btnVideoPlay.setVisibility(View.GONE);
@@ -1694,10 +1700,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             btnDeleteHotspot.setVisibility(((currentState == State.HotspotEdit) && hotspotSelected && !recording)
                     ? View.VISIBLE : View.GONE);
             //btnUndo.setVisibility(View.VISIBLE);
-            btnUndo.setVisibility(((currentState == State.Drawing) || (currentState == State.Erasing)) &&
-                    (dvDrawing != null) && dvDrawing.canUndo() ? View.VISIBLE : View.GONE);
-            btnRedo.setVisibility(((currentState == State.Drawing) || (currentState == State.Erasing)) &&
-                    (dvDrawing != null) && dvDrawing.canRedo() ? View.VISIBLE : View.GONE);
+            //btnUndo.setVisibility(((currentState == State.Drawing) || (currentState == State.Erasing)) &&
+            //        (dvDrawing != null) && dvDrawing.canUndo() ? View.VISIBLE : View.GONE);
+            //btnRedo.setVisibility(((currentState == State.Drawing) || (currentState == State.Erasing)) &&
+            //       (dvDrawing != null) && dvDrawing.canRedo() ? View.VISIBLE : View.GONE);
             btnVideoRestart.setVisibility(showVideoButtons && videoPaused && pauseLocation > 0 ? View.VISIBLE : View.GONE);
             btnVideoStepBack.setVisibility(showVideoButtons && videoPaused && pauseLocation > 0 ? View.VISIBLE : View.GONE);
             btnVideoPlay.setVisibility(showVideoButtons && videoPaused && pauseLocation < 2 ? View.VISIBLE : View.GONE);

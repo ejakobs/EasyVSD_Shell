@@ -32,6 +32,7 @@
 				android:layout_width="145dp"
 				android:layout_height="match_parent"
 				android:background="@color/dimgray"
+				android:animateLayoutChanges="true"
 				android:columnCount="4"
 				android:rowCount="6"
 				android:visibility="visible"
@@ -45,6 +46,7 @@
 					android:layout_column="0"
 					android:layout_marginBottom="10dp"
 					android:layout_row="5"
+					android:animateLayoutChanges="true"
 					android:background="@color/silver"
 					android:fillViewport="true"
 					android:visibility="visible" />
@@ -78,7 +80,7 @@
 				android:contentDescription="@string/activity_image"
 				android:scaleType="fitStart"
 				android:visibility="invisible" />
-33
+
 			<org.invotek.apps.easyvsd_shell.NewDrawingView
 				android:id="@+id/dvDrawingView"
 				android:layout_width="fill_parent"
@@ -94,7 +96,7 @@
 				android:rowCount="17"
 				android:columnCount="1"
 				android:orientation="vertical"
-				android:visibility="gone">
+				android:visibility="visible">
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_newActivity"
