@@ -21,8 +21,9 @@
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true">
 
-		<RelativeLayout
+		<LinearLayout
 			android:id="@+id/ScrollLayout"
+			android:orientation="horizontal"
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
 			android:visibility="visible">
@@ -31,13 +32,13 @@
 				android:id="@+id/NavOptions"
 				android:layout_width="145dp"
 				android:layout_height="match_parent"
-				android:background="@color/dimgray"
+				android:layout_alignParentLeft="true"
+				android:layout_alignParentTop="true"
 				android:animateLayoutChanges="true"
+				android:background="@color/dimgray"
 				android:columnCount="4"
 				android:rowCount="6"
-				android:visibility="visible"
-				android:layout_alignParentTop="true"
-				android:layout_alignParentLeft="true">
+				android:visibility="visible">
 
 				<ScrollView
 					android:id="@+id/ActivityGroups_vertical"
@@ -89,7 +90,7 @@
 
 			<GridLayout
 				android:id="@+id/adminPanel"
-				android:layout_width="match_parent"
+				android:layout_width="145dp"
 				android:layout_height="match_parent"
 				android:layout_alignParentRight="true"
 				android:background="@color/dimgray"
@@ -363,7 +364,7 @@
 				android:layout_toRightOf="@+id/NavOptions"
 				android:layout_toEndOf="@+id/NavOptions" />
 
-		</RelativeLayout>
+		</LinearLayout>
 	</HorizontalScrollView>
 
 </RelativeLayout>

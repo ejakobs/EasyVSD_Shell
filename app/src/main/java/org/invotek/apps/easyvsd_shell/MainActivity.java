@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     NewDrawingView dvDrawing;
     GridLayout adminPanel;
     GridLayout navLayout;
+    //HorizontalScrollView MainScrollView;
 
     BackgroundHighlightButton btnCreateActivity, btnCreatePage, btnEditHotspot, btnCancelHotspot, btnDrawingMode,
             btnNavMode, btnStartRecording, btnEndRecording, btnDeleteHotspot, /*btnUndo, btnRedo,*/ btnVideoRestart,
@@ -414,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         left + "," + top + "," + right + "," + bottom + "] old=[" + oldLeft + "," + oldTop + "," + oldRight +
                         "," + oldBottom + "]");
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                if(bottom > oldBottom)
+                if((prefs.getBoolean("allow_hotspot_text", false)) && (bottom > oldBottom))
                     setUpAdminPanel(false, false, false);
             }});
 
@@ -822,7 +823,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setId((isActivity ? minimumActivityId + activityIndex : minimumPageId + pageIndex));
         DisplayMetrics metrics = MainActivity.this.getResources().getDisplayMetrics();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "250"));
+        int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "250"));//Button on left size
         buttonSize = (int)Math.round(buttonSize * Math.max(metrics.widthPixels, metrics.heightPixels) / 2560f);
         Log.d("ActivityPage", "buttonSize=[" + String.valueOf(buttonSize) + "]");
         int margin = (int)Math.round(buttonSize / 25f);
@@ -1048,12 +1049,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonSize = (int)Math.round(buttonSize * Math.max(metrics.widthPixels, metrics.heightPixels) / 2560f);
         int margin = (int)Math.round(buttonSize / 25f);
         adminPanel = (GridLayout)findViewById(R.id.adminPanel);
-        RelativeLayout.LayoutParams pnlLayoutParamsAdmin = (RelativeLayout.LayoutParams) adminPanel.getLayoutParams();
-        RelativeLayout.LayoutParams pnlLayoutParamsDestination = (RelativeLayout.LayoutParams)destinationView.getLayoutParams();
-        RelativeLayout.LayoutParams pnlLayoutParamsVideoSurface = (RelativeLayout.LayoutParams)videoSurface.getLayoutParams();
-        RelativeLayout.LayoutParams pnlLayoutParamsDrawings = (RelativeLayout.LayoutParams)dvDrawing.getLayoutParams();
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            if(onTopOfVSD){
+        LinearLayout.LayoutParams pnlLayoutParamsAdmin = (LinearLayout.LayoutParams) adminPanel.getLayoutParams();
+        LinearLayout.LayoutParams pnlLayoutParamsDestination = (LinearLayout.LayoutParams)destinationView.getLayoutParams();
+        LinearLayout.LayoutParams pnlLayoutParamsVideoSurface = (LinearLayout.LayoutParams)videoSurface.getLayoutParams();
+        LinearLayout.LayoutParams pnlLayoutParamsDrawings = (LinearLayout.LayoutParams)dvDrawing.getLayoutParams();
+
+
+         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            /*if(onTopOfVSD){
                 pnlLayoutParamsDestination.addRule(RelativeLayout.LEFT_OF, 0);
                 pnlLayoutParamsVideoSurface.addRule(RelativeLayout.LEFT_OF, 0);
                 pnlLayoutParamsDrawings.addRule(RelativeLayout.LEFT_OF, 0);
@@ -1061,9 +1064,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 pnlLayoutParamsDestination.addRule(RelativeLayout.LEFT_OF, R.id.adminPanel);
                 pnlLayoutParamsVideoSurface.addRule(RelativeLayout.LEFT_OF, R.id.adminPanel);
                 pnlLayoutParamsDrawings.addRule(RelativeLayout.LEFT_OF, R.id.adminPanel);
-            }
+            }*/
             pnlLayoutParamsAdmin.width = (buttonSize + (margin * 4));
         }else{
+            /*
             if(onTopOfVSD){
                 pnlLayoutParamsDestination.addRule(RelativeLayout.ABOVE, 0);
                 pnlLayoutParamsVideoSurface.addRule(RelativeLayout.ABOVE, 0);
@@ -1073,13 +1077,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 pnlLayoutParamsVideoSurface.addRule(RelativeLayout.ABOVE, R.id.adminPanel);
                 pnlLayoutParamsDrawings.addRule(RelativeLayout.ABOVE, R.id.adminPanel);
             }
+            */
             pnlLayoutParamsAdmin.height = (buttonSize + (margin * 4));
 
         }
+
         adminPanel.setLayoutParams(pnlLayoutParamsAdmin);
         destinationView.setLayoutParams(pnlLayoutParamsDestination);
         videoSurface.setLayoutParams(pnlLayoutParamsVideoSurface);
         dvDrawing.setLayoutParams(pnlLayoutParamsDrawings);
+
         btnCreateActivity = (BackgroundHighlightButton)findViewById(R.id.btn_newActivity);
         btnCreateActivity.setForegroundImageResource(this, R.drawable.new_activity_circle, true); //realImages ? R.drawable.camera_me2 : R.drawable.take_picture, true);
         btnCreateActivity.setOnClickListener(this);
@@ -1170,7 +1177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DisplayMetrics metrics = MainActivity.this.getResources().getDisplayMetrics();
         boolean portrait = (MainActivity.this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) ||
                 (metrics.heightPixels > metrics.widthPixels);
-        int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "200"));
+        int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "250"));
         buttonSize = (int)Math.round(buttonSize * Math.max(metrics.widthPixels, metrics.heightPixels) / 2560f);
         if(navLayout == null){return;}
         ViewGroup.LayoutParams nP = navLayout.getLayoutParams();
@@ -1218,6 +1225,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int newDimen = portrait ? navLayout.getWidth() : navLayout.getHeight();
         GridLayout.LayoutParams params;
         if(adminInNav && ((currentMode == Mode.Create) || (currentMode == Mode.AdvancedCreate) || (currentMode == Mode.iSnap))){
+            //MainScrollView.onTouchEvent(false);
             if(adminPanel.getChildCount() > 0){
                 adminPanel.removeView(btnCreateActivity);
                 adminPanel.removeView(btnCreatePage);
