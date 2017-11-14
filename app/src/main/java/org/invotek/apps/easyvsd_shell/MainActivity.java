@@ -415,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         left + "," + top + "," + right + "," + bottom + "] old=[" + oldLeft + "," + oldTop + "," + oldRight +
                         "," + oldBottom + "]");
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                if((prefs.getBoolean("allow_hotspot_text", false)) && (bottom > oldBottom))
+                if(bottom > oldBottom)
                     setUpAdminPanel(false, false, false);
             }});
 
