@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Drawing currentDrawing;
     int[][] userData = {{R.drawable.car_exterior, R.drawable.car_interior},
             {R.drawable.lake_house},
-            {R.drawable.dog_group, R.drawable.standing_aussie, R.drawable.running_aussie}};
+            {R.drawable.dog_group, R.drawable.standing_aussie}};
     int currentPage = -1;
     int currentActivity = -1;
     private int minimumPageId = 200;
@@ -910,9 +910,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Rect visibleDestRect = new Rect();
             clickedView.getGlobalVisibleRect(visibleSourceRect);
             destinationView.getGlobalVisibleRect(visibleDestRect);
-            //Log.i("PlayTalk", "Main.showImageView entry" +
-            //	", SourceRect=" + visibleSourceRect.toShortString() +
-            //	", DestRect=" + visibleDestRect.toShortString() );
+            Log.i("PlayTalk", "Main.showImageView entry" +
+            	", SourceRect=" + visibleSourceRect.toShortString() +
+            	", DestRect=" + visibleDestRect.toShortString() );
             float visibleSourceWidth = visibleSourceRect.width() > 0 ? (float)visibleSourceRect.width() : (float)1;
             float visibleSourceHeight = visibleSourceRect.height() > 0 ? (float)visibleSourceRect.height() : (float)1;
             heightDividedWidth = visibleSourceHeight/ visibleSourceWidth;
@@ -927,9 +927,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 visibleDestRect.left += change/2;
                 visibleDestRect.right -= change/2;
             }
-            //Log.i("PlayTalk", "Main.showImageView exit" +
-            //	", SourceRect=" + visibleSourceRect.toShortString() +
-            //	", DestRect=" + visibleDestRect.toShortString() );
+            Log.i("PlayTalk", "Main.showImageView exit" +
+            	", SourceRect=" + visibleSourceRect.toShortString() +
+            	", DestRect=" + visibleDestRect.toShortString() );
 
             Bitmap toShow = ((BackgroundHighlightButton)clickedView).getButtonBitmap();
 
@@ -946,6 +946,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else{
             int[] dimens = getImageSize();
+           // int[] dimens;
+            //dimens = new int[2];
+           // dimens[0] = 45;
+            //[0] = 45;
+
             // Load the still image for this page into destinationView (ImageView)
             ImageDecoder decoder = new ImageDecoder();
             destinationView.setImageBitmap(decoder.getImage(this,

@@ -15,17 +15,18 @@
 		android:id="@+id/MainScrollView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:fillViewport="true"
-		android:visibility="visible"
-		android:layout_alignParentTop="true"
 		android:layout_alignParentLeft="true"
-		android:layout_alignParentStart="true">
+		android:layout_alignParentStart="true"
+		android:layout_alignParentTop="true"
+		android:fillViewport="true"
+		android:visibility="visible">
+
 
 		<LinearLayout
 			android:id="@+id/ScrollLayout"
-			android:orientation="horizontal"
 			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
+			android:orientation="horizontal"
 			android:visibility="visible">
 
 			<GridLayout
@@ -75,16 +76,16 @@
 
 			<ImageView
 				android:id="@+id/ActivityImage"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
 				android:layout_toRightOf="@+id/NavOptions"
 				android:contentDescription="@string/activity_image"
 				android:scaleType="fitStart"
-				android:visibility="invisible" />
+				android:visibility="visible" />
 
 			<org.invotek.apps.easyvsd_shell.NewDrawingView
 				android:id="@+id/dvDrawingView"
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="fill_parent"
 				android:layout_toRightOf="@id/NavOptions" />
 
@@ -94,161 +95,161 @@
 				android:layout_height="match_parent"
 				android:layout_alignParentRight="true"
 				android:background="@color/dimgray"
-				android:rowCount="17"
 				android:columnCount="1"
 				android:orientation="vertical"
+				android:rowCount="17"
 				android:visibility="visible">
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_newActivity"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="0"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="0"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_newPage"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="1"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="1"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_editHotspot"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="2"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="2"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_cancelHotspot"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="3"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="3"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_startRecording"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="4"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="4"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_endRecording"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="5"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="5"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_drawingMode"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="6"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="6"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_navMode"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="7"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="7"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_deleteHotspot"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="8"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="8"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_undo"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="9"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="9"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_redo"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="10"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="10"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_video_restart"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="11"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="11"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_video_skipback"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="12"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="12"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_video_play"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="13"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="13"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_video_skipforward"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="14"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="14"
 					android:visibility="gone" />
 
 				<org.invotek.apps.easyvsd_shell.BackgroundHighlightButton
 					android:id="@+id/btn_video_pause"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:layout_row="15"
 					android:layout_column="0"
 					android:layout_margin="10dp"
+					android:layout_row="15"
 					android:visibility="gone" />
 
 				<GridLayout
 					android:id="@+id/DrawingOptions"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
-					android:layout_below="@id/adminPanel"
 					android:layout_alignParentRight="true"
+					android:layout_below="@id/adminPanel"
 					android:layout_column="0"
 					android:layout_row="16"
 					android:columnCount="2"
@@ -350,21 +351,18 @@
 				</GridLayout>
 			</GridLayout>
 
-			<org.invotek.apps.easyvsd_shell.AnimatingView
-				android:id="@+id/AnimationViewShowing"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:layout_toEndOf="@+id/NavOptions"
-				android:layout_toRightOf="@+id/NavOptions" />
-
-			<org.invotek.apps.easyvsd_shell.AnimatingView
-				android:id="@+id/AnimationViewRemoving"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:layout_toRightOf="@+id/NavOptions"
-				android:layout_toEndOf="@+id/NavOptions" />
-
 		</LinearLayout>
+
 	</HorizontalScrollView>
+
+	<org.invotek.apps.easyvsd_shell.AnimatingView
+		android:id="@+id/AnimationViewRemoving"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" />
+
+	<org.invotek.apps.easyvsd_shell.AnimatingView
+		android:id="@+id/AnimationViewShowing"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent" />
 
 </RelativeLayout>
