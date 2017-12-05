@@ -136,17 +136,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ScrollView vActivities, vPages;
     LinearLayout activityLayout, pageLayout;
     NewDrawingView dvDrawing;
-    LinearLayout adminPanel;
+    GridLayout adminPanel;
     GridLayout navLayout;
+    //HorizontalScrollView MainScrollView;
 
     BackgroundHighlightButton btnCreateActivity, btnCreatePage, btnEditHotspot, btnCancelHotspot, btnDrawingMode,
-            btnNavMode, btnStartRecording, btnEndRecording, btnDeleteHotspot, btnUndo, btnRedo, btnVideoRestart,
+            btnNavMode, btnStartRecording, btnEndRecording, btnDeleteHotspot, /*btnUndo, btnRedo,*/ btnVideoRestart,
             btnVideoStepBack, btnVideoPlay, btnVideoStepForward, btnVideoPause;
 
     Drawing currentDrawing;
     int[][] userData = {{R.drawable.car_exterior, R.drawable.car_interior},
             {R.drawable.lake_house},
-            {R.drawable.dog_group, R.drawable.standing_aussie, R.drawable.running_aussie}};
+            {R.drawable.dog_group, R.drawable.standing_aussie}};
     int currentPage = -1;
     int currentActivity = -1;
     private int minimumPageId = 200;
@@ -182,10 +183,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadUser();
 
         vPages = (ScrollView)findViewById(R.id.ActivityPages_vertical);
-        if(vPages != null){ vPages.removeAllViews(); }
+        //if(vPages != null){ vPages.removeAllViews(); }
 
         hPages = (HorizontalScrollView)findViewById(R.id.ActivityPages_horizontal);
-        if(hPages != null){ hPages.removeAllViews(); }
+        //if(hPages != null){ hPages.removeAllViews(); }
 
         destinationView = (ImageView)findViewById(R.id.ActivityImage);
         videoSurface = (SurfaceView)findViewById(R.id.ActivityVideo);
@@ -414,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         left + "," + top + "," + right + "," + bottom + "] old=[" + oldLeft + "," + oldTop + "," + oldRight +
                         "," + oldBottom + "]");
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                if((prefs.getBoolean("allow_hotspot_text", false)) && (bottom > oldBottom))
+                if(bottom > oldBottom)
                     setUpAdminPanel(false, false, false);
             }});
 
@@ -439,9 +440,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadUser();
 
         vPages = (ScrollView)findViewById(R.id.ActivityPages_vertical);
-        if(vPages != null){vPages.removeAllViews();}
+        //if(vPages != null){vPages.removeAllViews();}
         hPages = (HorizontalScrollView)findViewById(R.id.ActivityPages_horizontal);
-        if(hPages != null){ hPages.removeAllViews(); }
+        //if(hPages != null){ hPages.removeAllViews(); }
 
         setUpAdminPanel(false, false, false);
     }
@@ -640,9 +641,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_drawingMode:
                 setDrawingOptions(true, false);
+                ((LockableHorizontalScrollView)findViewById(R.id.MainScrollView)).setScrollingEnabled(false);
                 break;
             case R.id.btn_navMode:
                 setDrawingOptions(false, false);
+                ((LockableHorizontalScrollView)findViewById(R.id.MainScrollView)).setScrollingEnabled(true);
                 loadUser();
                 loadGroup();
                 break;
@@ -655,6 +658,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_deleteHotspot:
                 // delete currently selected hotspot
                 break;
+            /*
             case R.id.btn_undo:
                 dvDrawing.undo();
                 setUpAdminPanel(false, false, false);
@@ -663,6 +667,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dvDrawing.redo();
                 setUpAdminPanel(false, false, false);
                 break;
+            */
             case R.id.btn_video_restart:
                 // restart video
                 break;
@@ -820,7 +825,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setId((isActivity ? minimumActivityId + activityIndex : minimumPageId + pageIndex));
         DisplayMetrics metrics = MainActivity.this.getResources().getDisplayMetrics();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "250"));
+        int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "250"));//Button on left size
         buttonSize = (int)Math.round(buttonSize * Math.max(metrics.widthPixels, metrics.heightPixels) / 2560f);
         Log.d("ActivityPage", "buttonSize=[" + String.valueOf(buttonSize) + "]");
         int margin = (int)Math.round(buttonSize / 25f);
@@ -907,9 +912,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Rect visibleDestRect = new Rect();
             clickedView.getGlobalVisibleRect(visibleSourceRect);
             destinationView.getGlobalVisibleRect(visibleDestRect);
-            //Log.i("PlayTalk", "Main.showImageView entry" +
-            //	", SourceRect=" + visibleSourceRect.toShortString() +
-            //	", DestRect=" + visibleDestRect.toShortString() );
+            Log.i("PlayTalk", "Main.showImageView entry" +
+            	", SourceRect=" + visibleSourceRect.toShortString() +
+            	", DestRect=" + visibleDestRect.toShortString() );
             float visibleSourceWidth = visibleSourceRect.width() > 0 ? (float)visibleSourceRect.width() : (float)1;
             float visibleSourceHeight = visibleSourceRect.height() > 0 ? (float)visibleSourceRect.height() : (float)1;
             heightDividedWidth = visibleSourceHeight/ visibleSourceWidth;
@@ -924,9 +929,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 visibleDestRect.left += change/2;
                 visibleDestRect.right -= change/2;
             }
-            //Log.i("PlayTalk", "Main.showImageView exit" +
-            //	", SourceRect=" + visibleSourceRect.toShortString() +
-            //	", DestRect=" + visibleDestRect.toShortString() );
+            Log.i("PlayTalk", "Main.showImageView exit" +
+            	", SourceRect=" + visibleSourceRect.toShortString() +
+            	", DestRect=" + visibleDestRect.toShortString() );
 
             Bitmap toShow = ((BackgroundHighlightButton)clickedView).getButtonBitmap();
 
@@ -943,6 +948,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else{
             int[] dimens = getImageSize();
+           // int[] dimens;
+            //dimens = new int[2];
+           // dimens[0] = 45;
+            //[0] = 45;
+
             // Load the still image for this page into destinationView (ImageView)
             ImageDecoder decoder = new ImageDecoder();
             destinationView.setImageBitmap(decoder.getImage(this,
@@ -1045,13 +1055,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int buttonSize = Integer.parseInt(prefs.getString("nav_button_size", "250"));
         buttonSize = (int)Math.round(buttonSize * Math.max(metrics.widthPixels, metrics.heightPixels) / 2560f);
         int margin = (int)Math.round(buttonSize / 25f);
-        adminPanel = (LinearLayout)findViewById(R.id.adminPanel);
-        RelativeLayout.LayoutParams pnlLayoutParamsAdmin = (RelativeLayout.LayoutParams) adminPanel.getLayoutParams();
-        RelativeLayout.LayoutParams pnlLayoutParamsDestination = (RelativeLayout.LayoutParams)destinationView.getLayoutParams();
-        RelativeLayout.LayoutParams pnlLayoutParamsVideoSurface = (RelativeLayout.LayoutParams)videoSurface.getLayoutParams();
-        RelativeLayout.LayoutParams pnlLayoutParamsDrawings = (RelativeLayout.LayoutParams)dvDrawing.getLayoutParams();
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            if(onTopOfVSD){
+        adminPanel = (GridLayout)findViewById(R.id.adminPanel);
+        LinearLayout.LayoutParams pnlLayoutParamsAdmin = (LinearLayout.LayoutParams) adminPanel.getLayoutParams();
+        LinearLayout.LayoutParams pnlLayoutParamsDestination = (LinearLayout.LayoutParams)destinationView.getLayoutParams();
+        LinearLayout.LayoutParams pnlLayoutParamsVideoSurface = (LinearLayout.LayoutParams)videoSurface.getLayoutParams();
+        LinearLayout.LayoutParams pnlLayoutParamsDrawings = (LinearLayout.LayoutParams)dvDrawing.getLayoutParams();
+
+
+         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            /*if(onTopOfVSD){
                 pnlLayoutParamsDestination.addRule(RelativeLayout.LEFT_OF, 0);
                 pnlLayoutParamsVideoSurface.addRule(RelativeLayout.LEFT_OF, 0);
                 pnlLayoutParamsDrawings.addRule(RelativeLayout.LEFT_OF, 0);
@@ -1059,9 +1071,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 pnlLayoutParamsDestination.addRule(RelativeLayout.LEFT_OF, R.id.adminPanel);
                 pnlLayoutParamsVideoSurface.addRule(RelativeLayout.LEFT_OF, R.id.adminPanel);
                 pnlLayoutParamsDrawings.addRule(RelativeLayout.LEFT_OF, R.id.adminPanel);
-            }
+            }*/
             pnlLayoutParamsAdmin.width = (buttonSize + (margin * 4));
         }else{
+            /*
             if(onTopOfVSD){
                 pnlLayoutParamsDestination.addRule(RelativeLayout.ABOVE, 0);
                 pnlLayoutParamsVideoSurface.addRule(RelativeLayout.ABOVE, 0);
@@ -1071,13 +1084,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 pnlLayoutParamsVideoSurface.addRule(RelativeLayout.ABOVE, R.id.adminPanel);
                 pnlLayoutParamsDrawings.addRule(RelativeLayout.ABOVE, R.id.adminPanel);
             }
+            */
             pnlLayoutParamsAdmin.height = (buttonSize + (margin * 4));
 
         }
+
         adminPanel.setLayoutParams(pnlLayoutParamsAdmin);
         destinationView.setLayoutParams(pnlLayoutParamsDestination);
         videoSurface.setLayoutParams(pnlLayoutParamsVideoSurface);
         dvDrawing.setLayoutParams(pnlLayoutParamsDrawings);
+
         btnCreateActivity = (BackgroundHighlightButton)findViewById(R.id.btn_newActivity);
         btnCreateActivity.setForegroundImageResource(this, R.drawable.new_activity_circle, true); //realImages ? R.drawable.camera_me2 : R.drawable.take_picture, true);
         btnCreateActivity.setOnClickListener(this);
@@ -1115,6 +1131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDeleteHotspot.setForegroundImageResource(this, R.drawable.delete_circle, true); // realImages ? R.drawable.trash_icon : R.drawable.delete_hotspot, true);
         btnDeleteHotspot.setOnClickListener(this);
         setUpAdminButton(btnDeleteHotspot, buttonSize, margin);
+        /*
         btnUndo = (BackgroundHighlightButton)findViewById(R.id.btn_undo);
         btnUndo.setForegroundImageResource(this, R.drawable.undo_circle, true);
         btnUndo.setOnClickListener(this);
@@ -1123,6 +1140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnRedo.setForegroundImageResource(this, R.drawable.redo_circle, true);
         btnRedo.setOnClickListener(this);
         setUpAdminButton(btnRedo, buttonSize, margin);
+        */
         btnVideoRestart = (BackgroundHighlightButton)findViewById(R.id.btn_video_restart);
         btnVideoRestart.setForegroundImageResource(this, R.drawable.restart_button, true);
         btnVideoRestart.setOnClickListener(this);
@@ -1162,7 +1180,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean videoPaused;
     private void setUpAdminPanel(boolean hotspotCreated, boolean hotspotSelected, boolean recording){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        boolean adminInNav = true; //prefs.getBoolean("admin_in_nav", true);
+        boolean adminInNav = false; //prefs.getBoolean("admin_in_nav", true);
         DisplayMetrics metrics = MainActivity.this.getResources().getDisplayMetrics();
         boolean portrait = (MainActivity.this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) ||
                 (metrics.heightPixels > metrics.widthPixels);
@@ -1185,8 +1203,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setUpAdminButton(btnEndRecording, buttonSize, margin);
         setUpAdminButton(btnDrawingMode, buttonSize, margin);
         setUpAdminButton(btnNavMode, buttonSize, margin);
-        setUpAdminButton(btnUndo, buttonSize, margin);
-        setUpAdminButton(btnRedo, buttonSize, margin);
+        //setUpAdminButton(btnUndo, buttonSize, margin);
+        //setUpAdminButton(btnRedo, buttonSize, margin);
         setUpAdminButton(btnVideoRestart, buttonSize, margin);
         setUpAdminButton(btnVideoStepBack, buttonSize, margin);
         setUpAdminButton(btnVideoPlay, buttonSize, margin);
@@ -1203,8 +1221,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             navLayout.removeView(btnEndRecording);
             navLayout.removeView(btnDrawingMode);
             navLayout.removeView(btnNavMode);
-            navLayout.removeView(btnUndo);
-            navLayout.removeView(btnRedo);
+            //navLayout.removeView(btnUndo);
+            //navLayout.removeView(btnRedo);
             navLayout.removeView(btnVideoRestart);
             navLayout.removeView(btnVideoStepBack);
             navLayout.removeView(btnVideoPlay);
@@ -1214,6 +1232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int newDimen = portrait ? navLayout.getWidth() : navLayout.getHeight();
         GridLayout.LayoutParams params;
         if(adminInNav && ((currentMode == Mode.Create) || (currentMode == Mode.AdvancedCreate) || (currentMode == Mode.iSnap))){
+            //MainScrollView.onTouchEvent(false);
             if(adminPanel.getChildCount() > 0){
                 adminPanel.removeView(btnCreateActivity);
                 adminPanel.removeView(btnCreatePage);
@@ -1224,8 +1243,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 adminPanel.removeView(btnEndRecording);
                 adminPanel.removeView(btnDrawingMode);
                 adminPanel.removeView(btnNavMode);
-                adminPanel.removeView(btnUndo);
-                adminPanel.removeView(btnRedo);
+                //adminPanel.removeView(btnUndo);
+                //adminPanel.removeView(btnRedo);
                 adminPanel.removeView(btnVideoRestart);
                 adminPanel.removeView(btnVideoStepBack);
                 adminPanel.removeView(btnVideoPlay);
@@ -1468,6 +1487,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         params.height = buttonSize;
                     }
                     navLayout.addView(btnNavMode, params);
+                    /*
                     boolean undoRedoAllowed = prefs.getBoolean("undo_redo_enabled", false);
                     if(dvDrawing != null){
                         if(undoRedoAllowed && dvDrawing.canRedo() && dvDrawing.canUndo()){
@@ -1523,7 +1543,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }else{
                         newDimen -= (buttonSize + (2*margin));
-                    }
+                    }*/
                 }
             }
         }else if(adminInNav && currentPage >= 0 && isVideo &&
@@ -1538,8 +1558,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 adminPanel.removeView(btnEndRecording);
                 adminPanel.removeView(btnDrawingMode);
                 adminPanel.removeView(btnNavMode);
-                adminPanel.removeView(btnUndo);
-                adminPanel.removeView(btnRedo);
+                //adminPanel.removeView(btnUndo);
+                //adminPanel.removeView(btnRedo);
                 adminPanel.removeView(btnVideoRestart);
                 adminPanel.removeView(btnVideoStepBack);
                 adminPanel.removeView(btnVideoPlay);
@@ -1658,7 +1678,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 currentState == State.Navigate);
         Log.i("setUpAdminPanel", "showVideoButtons=[" + String.valueOf(showVideoButtons) +
                 "] enableVideoControlHotspots=[" + String.valueOf(!prefs.getBoolean("enableVideoControlHotspots", false)) + "]");
-        adminPanel.setVisibility((((currentMode == Mode.Create) || (currentMode == Mode.AdvancedCreate)) && !adminInNav) ? View.VISIBLE : View.GONE);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        adminPanel.setVisibility((((currentMode == Mode.Create) || (currentMode == Mode.AdvancedCreate)) && !adminInNav) ? View.VISIBLE : View.INVISIBLE);
         if(currentMode == Mode.iSnap){
             btnCreateActivity.setVisibility(View.GONE);
             btnCreatePage.setVisibility(View.VISIBLE);
@@ -1669,8 +1690,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             btnStartRecording.setVisibility(View.GONE);
             btnEndRecording.setVisibility(View.GONE);
             btnDeleteHotspot.setVisibility(View.GONE);
-            btnUndo.setVisibility(View.GONE);
-            btnRedo.setVisibility(View.GONE);
+            //btnUndo.setVisibility(View.GONE);
+            //btnRedo.setVisibility(View.GONE);
             btnVideoRestart.setVisibility(View.GONE);
             btnVideoStepBack.setVisibility(View.GONE);
             btnVideoPlay.setVisibility(View.GONE);
@@ -1694,10 +1715,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             btnDeleteHotspot.setVisibility(((currentState == State.HotspotEdit) && hotspotSelected && !recording)
                     ? View.VISIBLE : View.GONE);
             //btnUndo.setVisibility(View.VISIBLE);
-            btnUndo.setVisibility(((currentState == State.Drawing) || (currentState == State.Erasing)) &&
-                    (dvDrawing != null) && dvDrawing.canUndo() ? View.VISIBLE : View.GONE);
-            btnRedo.setVisibility(((currentState == State.Drawing) || (currentState == State.Erasing)) &&
-                    (dvDrawing != null) && dvDrawing.canRedo() ? View.VISIBLE : View.GONE);
+            //btnUndo.setVisibility(((currentState == State.Drawing) || (currentState == State.Erasing)) &&
+            //        (dvDrawing != null) && dvDrawing.canUndo() ? View.VISIBLE : View.GONE);
+            //btnRedo.setVisibility(((currentState == State.Drawing) || (currentState == State.Erasing)) &&
+            //       (dvDrawing != null) && dvDrawing.canRedo() ? View.VISIBLE : View.GONE);
             btnVideoRestart.setVisibility(showVideoButtons && videoPaused && pauseLocation > 0 ? View.VISIBLE : View.GONE);
             btnVideoStepBack.setVisibility(showVideoButtons && videoPaused && pauseLocation > 0 ? View.VISIBLE : View.GONE);
             btnVideoPlay.setVisibility(showVideoButtons && videoPaused && pauseLocation < 2 ? View.VISIBLE : View.GONE);
@@ -1863,7 +1884,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Log.i("PlayTalk", "setDrawingOptions: State=[" + String.valueOf(State.getValue(currentState)) + "]");
         invalidateOptionsMenu();
         if(drawing || erasing){
-            if(hActivities != null)
+            /*if(hActivities != null)
                 hActivities.setVisibility(View.GONE);
             if(vActivities != null){
                 vActivities.setVisibility(View.GONE);
@@ -1874,7 +1895,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(vPages != null){
                 vPages.setVisibility(View.GONE);
                 Log.d("vPages", "1045 vPages Gone");
-            }
+            }*/
             GridLayout drawingOptions = (GridLayout)findViewById(R.id.DrawingOptions);
             if(drawingOptions != null)
                 drawingOptions.setVisibility(View.VISIBLE);
@@ -1888,7 +1909,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             GridLayout drawingOptions = (GridLayout)findViewById(R.id.DrawingOptions);
             if(drawingOptions != null)
                 drawingOptions.setVisibility(View.GONE);
-            if(hActivities != null)
+            /*if(hActivities != null)
                 hActivities.setVisibility(View.VISIBLE);
             if(vActivities != null){
                 vActivities.setVisibility(View.VISIBLE);
@@ -1899,7 +1920,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(vPages != null){
                 vPages.setVisibility(View.VISIBLE);
                 Log.d("vPages", "1070 vPages Visible");
-            }
+            }*/
         }
         //Log.i("PlayTalk", "Main.setDrawingOptions: exit, State=[" + String.valueOf(State.getValue(currentState)) + "]" +
         //	", dvDrawing.Enabled=" + Boolean.toString(dvDrawing.isEnabled() )+
