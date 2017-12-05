@@ -346,17 +346,19 @@
                     android:visibility="gone" />
             </GridLayout>
 
-            <org.invotek.apps.easyvsd_shell.AnimatingView
-                android:id="@+id/AnimationViewRemoving"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
 
-            <org.invotek.apps.easyvsd_shell.AnimatingView
-                android:id="@+id/AnimationViewShowing"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
 
         </RelativeLayout>
     </ScrollView>
+
+    <org.invotek.apps.easyvsd_shell.AnimatingView
+        android:id="@+id/AnimationViewRemoving"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <org.invotek.apps.easyvsd_shell.AnimatingView
+        android:id="@+id/AnimationViewShowing"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
 </RelativeLayout>

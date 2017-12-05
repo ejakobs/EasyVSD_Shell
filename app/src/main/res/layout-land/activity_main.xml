@@ -11,7 +11,7 @@
     android:id="@+id/MainLayout"
     tools:context=".MainActivity" >
 
-	<HorizontalScrollView
+	<org.invotek.apps.easyvsd_shell.LockableHorizontalScrollView
 		android:id="@+id/MainScrollView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -353,7 +353,7 @@
 
 		</LinearLayout>
 
-	</HorizontalScrollView>
+	</org.invotek.apps.easyvsd_shell.LockableHorizontalScrollView>
 
 	<org.invotek.apps.easyvsd_shell.AnimatingView
 		android:id="@+id/AnimationViewRemoving"

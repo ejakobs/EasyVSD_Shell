@@ -641,9 +641,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_drawingMode:
                 setDrawingOptions(true, false);
+                ((LockableHorizontalScrollView)findViewById(R.id.MainScrollView)).setScrollingEnabled(false);
                 break;
             case R.id.btn_navMode:
                 setDrawingOptions(false, false);
+                ((LockableHorizontalScrollView)findViewById(R.id.MainScrollView)).setScrollingEnabled(true);
                 loadUser();
                 loadGroup();
                 break;
